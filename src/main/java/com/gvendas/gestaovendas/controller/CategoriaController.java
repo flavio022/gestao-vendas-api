@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,13 +31,13 @@ public class CategoriaController {
     }
 
     @PostMapping
-    public ResponseEntity<Categoria> salvar(@RequestBody Categoria categoria){
+    public ResponseEntity<Categoria> salvar(@Valid @RequestBody Categoria categoria){
         Categoria categoriaSalva = categoriaService.salvar(categoria);
         return ResponseEntity.status(HttpStatus.CREATED).body(categoriaSalva);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Categoria> atualizar(@PathVariable Long id, @RequestBody Categoria categoria){
+    public ResponseEntity<Categoria> atualizar(@Valid @PathVariable Long id, @RequestBody Categoria categoria){
         return ResponseEntity.ok(categoriaService.atualizar(id,categoria));
     }
 }
