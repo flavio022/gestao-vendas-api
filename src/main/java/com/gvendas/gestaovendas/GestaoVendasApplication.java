@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 
 @EntityScan(basePackages = {"com.gvendas.gestaovendas.entities"})
 @EnableJpaRepositories(basePackages = {"com.gvendas.gestaovendas.repository"})
-@ComponentScan(basePackages = {"com.gvendas.gestaovendas.services","com.gvendas.gestaovendas.controller"})
+@ComponentScan(basePackages = {"com.gvendas.gestaovendas.services","com.gvendas.gestaovendas.controller","com.gvendas.gestaovendas.excecao", "com.gvendas.gestaovendas.util"})
 @SpringBootApplication
 public class GestaoVendasApplication {
 
