@@ -45,4 +45,11 @@ public class CategoriaController {
     public ResponseEntity<Categoria> atualizar(@Valid @PathVariable Long id, @RequestBody Categoria categoria){
         return ResponseEntity.ok(categoriaService.atualizar(id,categoria));
     }
+    @ApiOperation(value = "Deletar")
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deletar(@Valid @PathVariable Long id){
+        categoriaService.delete(id);
+    }
 }
+

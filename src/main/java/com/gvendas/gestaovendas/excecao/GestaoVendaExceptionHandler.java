@@ -47,6 +47,14 @@ public class GestaoVendaExceptionHandler extends ResponseEntityExceptionHandler 
         List<Error> errors = Arrays.asList(new Error(msgUsuario,msgDesenvolvedor));
         return handleExceptionInternal(ex,errors,new HttpHeaders(),HttpStatus.BAD_REQUEST,request);
     }
+    @ExceptionHandler(RegraNegocioException.class)
+    public ResponseEntity<Object> handleRegraNegocioException(EmptyResultDataAccessException ex,
+                                                                       WebRequest request){
+        String msgUsuario = ex.getMessage();
+        String msgDesenvolvedor = ex.toString();
+        List<Error> errors = Arrays.asList(new Error(msgUsuario,msgDesenvolvedor));
+        return handleExceptionInternal(ex,errors,new HttpHeaders(),HttpStatus.BAD_REQUEST,request);
+    }
     private String tratarMessagemUsuario(FieldError fieldError) {
         if(fieldError.getCode().equals(NOT_BLANK)) {
             return fieldError.getDefaultMessage().concat("é obrigatório.");
