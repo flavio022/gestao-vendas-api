@@ -21,7 +21,7 @@ public class CategoriaController {
 
     @Autowired
     private CategoriaService categoriaService;
-    @ApiOperation(value = "Listar")
+    @ApiOperation(value = "Listar",nickname = "listarTodas")
     @GetMapping
     public List<Categoria>listarTodas(){
         return categoriaService.listAll();
@@ -33,19 +33,19 @@ public class CategoriaController {
         return categoria.isPresent() ? ResponseEntity.ok(categoria): ResponseEntity.notFound().build();
     }
 
-    @ApiOperation(value = "Salva")
+    @ApiOperation(value = "Salva",nickname = "salvar")
     @PostMapping
     public ResponseEntity<Categoria> salvar(@Valid @RequestBody Categoria categoria){
         Categoria categoriaSalva = categoriaService.salvar(categoria);
         return ResponseEntity.status(HttpStatus.CREATED).body(categoriaSalva);
     }
 
-    @ApiOperation(value = "Atualizar")
+    @ApiOperation(value = "Atualizar",nickname = "Atualizar")
     @PutMapping("/{id}")
     public ResponseEntity<Categoria> atualizar(@Valid @PathVariable Long id, @RequestBody Categoria categoria){
         return ResponseEntity.ok(categoriaService.atualizar(id,categoria));
     }
-    @ApiOperation(value = "Deletar")
+    @ApiOperation(value = "Deletar",nickname = "Deletar")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletar(@Valid @PathVariable Long id){
