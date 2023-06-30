@@ -4,6 +4,7 @@ import com.gvendas.gestaovendas.entities.Produto;
 import com.gvendas.gestaovendas.services.ProdutoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -34,7 +35,7 @@ public class ProdutoController {
     }
     @ApiOperation(value = "Salvar produto", nickname = "Salvar" )
     @PostMapping
-    public ResponseEntity<Produto> salvar(@RequestBody Produto produto){
+    public ResponseEntity<Produto> salvar(@Valid @RequestBody Produto produto){
         return ResponseEntity.status(HttpStatus.CREATED).body(produtoService.salvar(produto));
     }
 }

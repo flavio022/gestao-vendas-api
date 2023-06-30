@@ -21,7 +21,9 @@ import java.util.List;
 public class GestaoVendaExceptionHandler extends ResponseEntityExceptionHandler {
 
     public static final String NOT_BLANK = "NotBlank";
+    public static final String NOT_NULL = "NotNull";
     public static final String LENGTH = "Length";
+
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
@@ -66,8 +68,11 @@ public class GestaoVendaExceptionHandler extends ResponseEntityExceptionHandler 
     }
     private String tratarMessagemUsuario(FieldError fieldError) {
         if(fieldError.getCode().equals(NOT_BLANK)) {
-            return fieldError.getDefaultMessage().concat("é obrigatório.");
-        }if(fieldError.getCode().equals(LENGTH)){
+            return fieldError.getDefaultMessage().concat(" é obrigatório.");
+        }if(fieldError.getCode().equals(NOT_NULL)){
+            return fieldError.getDefaultMessage().concat(" é obrigatório");
+        }
+        if(fieldError.getCode().equals(LENGTH)){
             return fieldError.getDefaultMessage().concat(String.format("deve ter entre %s e %s caracteres.",
                     fieldError.getArguments()[2],fieldError.getArguments()[1]));
         }
