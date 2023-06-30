@@ -1,12 +1,10 @@
 package com.gvendas.gestaovendas.services;
 
-import com.gvendas.gestaovendas.entities.Categoria;
 import com.gvendas.gestaovendas.entities.Produto;
 import com.gvendas.gestaovendas.excecao.RegraNegocioException;
 import com.gvendas.gestaovendas.repository.CategoriaRepository;
 import com.gvendas.gestaovendas.repository.ProdutoRepository;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
@@ -38,8 +36,8 @@ public class ProdutoService {
     public Optional<Produto> buscarPorCodigo(Long id, Long idCategoria){
         return produtoRepository.buscarPorCodigo(id,idCategoria);
     }
-    public Produto salvar(Produto produto){
-        validarCategoriaDoProdutoExistente(produto.getCategoria().getCodigo());
+    public Produto salvar(Long codigoCategoria, Produto produto){
+        validarCategoriaDoProdutoExistente(codigoCategoria);
         validarProdutoDuplicado(produto);
         return produtoRepository.save(produto);
     }
@@ -65,7 +63,7 @@ public class ProdutoService {
     private void validarProdutoDuplicado(Produto produto){
        Optional<Produto> produtoPorDescricao =  produtoRepository.findByCategoriaCodigoAndDescricao(
               produto.getCategoria().getCodigo(),
-              produto.getDescricao())
+              produto.getDescricao());
         if(produtoPorDescricao.isPresent() && produtoPorDescricao.get().getCodigo() != produto.getCodigo()){
             throw new RegraNegocioException(String.format(
                     "O Produto %s ja esta cadastrado!",
