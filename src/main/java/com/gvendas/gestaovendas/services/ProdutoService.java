@@ -5,7 +5,9 @@ import com.gvendas.gestaovendas.entities.Produto;
 import com.gvendas.gestaovendas.excecao.RegraNegocioException;
 import com.gvendas.gestaovendas.repository.CategoriaRepository;
 import com.gvendas.gestaovendas.repository.ProdutoRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -42,11 +44,29 @@ public class ProdutoService {
         return produtoRepository.save(produto);
     }
 
-    private void validarProdutoDuplicado(Produto produto){
+    public Produto atualizar(Long codigoCategoria,Long codigoProduto,Produto produto){
+       Produto produtoAtualizar =  validarSeProdutoExiste(codigoProduto,codigoCategoria);
+       validarProdutoDuplicado(produto);
+       BeanUtils.copyProperties(produto,produtoAtualizar,"codigo");
 
-        if(produtoRepository.findByCategoriaCodigoAndDescricao(
-                produto.getCategoria().getCodigo(),
-                produto.getDescricao()).isPresent()){
+       return produtoRepository.save(produtoAtualizar);
+    }
+
+    private Produto validarSeProdutoExiste(Long codigoProduto, Long codigoCategoria) {
+        Optional<Produto> produto = buscarPorCodigo(codigoProduto,codigoCategoria);
+
+        if(produto.isEmpty()){
+            throw new EmptyResultDataAccessException(1);
+        }
+
+        return produto.get();
+    }
+
+    private void validarProdutoDuplicado(Produto produto){
+       Optional<Produto> produtoPorDescricao =  produtoRepository.findByCategoriaCodigoAndDescricao(
+              produto.getCategoria().getCodigo(),
+              produto.getDescricao())
+        if(produtoPorDescricao.isPresent() && produtoPorDescricao.get().getCodigo() != produto.getCodigo()){
             throw new RegraNegocioException(String.format(
                     "O Produto %s ja esta cadastrado!",
                     produto.getDescricao()));
