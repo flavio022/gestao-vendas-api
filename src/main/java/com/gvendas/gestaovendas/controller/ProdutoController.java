@@ -33,7 +33,7 @@ public class ProdutoController {
          Optional<Produto> produto = produtoService.buscarPorCodigo(codigo,codigoCategoria);
          return produto.isPresent() ? ResponseEntity.ok(produto) : ResponseEntity.notFound().build();
     }
-    @ApiOperation(value = "Salvar produto", nickname = "Salvar" )
+    @ApiOperation(value = "Salvar produto", nickname = "SalvarProduto" )
     @PostMapping
     public ResponseEntity<Produto> salvar(
           @PathVariable Long codigoCategoria,
@@ -41,12 +41,19 @@ public class ProdutoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(produtoService.salvar(codigoCategoria,produto));
     }
 
-    @ApiOperation(value = "Atualizar", nickname = "AtualizarProduto" )
+    @ApiOperation(value = "Atualizar", nickname = "atualizarProduto" )
     @PutMapping("/{codigoProduto}")
     public ResponseEntity<Produto> atualizar(
           @PathVariable Long codigoCategoria,
           @PathVariable Long codigoProduto,
           @Valid @RequestBody Produto produto){
         return ResponseEntity.ok(produtoService.atualizar(codigoCategoria,codigoProduto,produto));
+    }
+
+    @ApiOperation(value = "Deletar", nickname = "deletarProduto" )
+    @DeleteMapping("/{codigoProduto}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deletar(@PathVariable Long codigoCategoria, @PathVariable Long codigoProduto){
+        produtoService.deletar(codigoCategoria,codigoProduto);
     }
 }

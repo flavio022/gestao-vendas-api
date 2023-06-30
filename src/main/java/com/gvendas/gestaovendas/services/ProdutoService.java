@@ -50,6 +50,11 @@ public class ProdutoService {
        return produtoRepository.save(produtoAtualizar);
     }
 
+    public void deletar(Long codigoCategoria,Long codigoProduto){
+        Produto produtoDeletar = validarSeProdutoExiste(codigoProduto,codigoCategoria);
+        produtoRepository.delete(produtoDeletar);
+    }
+
     private Produto validarSeProdutoExiste(Long codigoProduto, Long codigoCategoria) {
         Optional<Produto> produto = buscarPorCodigo(codigoProduto,codigoCategoria);
 
