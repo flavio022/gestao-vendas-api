@@ -1,9 +1,11 @@
 package com.gvendas.gestaovendas.controller;
 
+import com.gvendas.gestaovendas.dto.CategoriaResponseDTO;
 import com.gvendas.gestaovendas.entities.Categoria;
 import com.gvendas.gestaovendas.services.CategoriaService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,14 +25,18 @@ public class CategoriaController {
     private CategoriaService categoriaService;
     @ApiOperation(value = "Listar",nickname = "listarTodas")
     @GetMapping
-    public List<Categoria>listarTodas(){
-        return categoriaService.listAll();
+    public List<CategoriaResponseDTO>listarTodas(){
+        return categoriaService.listAll().stream()
+              .map(categoria -> CategoriaResponseDTO.converteParaCategoriaDTo(categoria))
+              .collect(Collectors.toList());
     }
     @ApiOperation(value = "Listar por código")
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Categoria>>listById(@PathVariable Long id){
+    public ResponseEntity<CategoriaResponseDTO>listById(@PathVariable Long id){
         Optional<Categoria> categoria =  categoriaService.listById(id);
-        return categoria.isPresent() ? ResponseEntity.ok(categoria): ResponseEntity.notFound().build();
+        return categoria.isPresent() ? ResponseEntity.ok(
+              CategoriaResponseDTO.converteParaCategoriaDTo(categoria.get()))
+              : ResponseEntity.notFound().build();
     }
 
     @ApiOperation(value = "Salva",nickname = "salvarCategoria")
