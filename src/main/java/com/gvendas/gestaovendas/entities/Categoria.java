@@ -9,13 +9,21 @@ import java.util.Objects;
 @Entity
 @Table(name = "categoria")
 public class Categoria {
+    public Categoria() {
+
+    }
+    public Categoria(String nome) {
+        this.nome = nome;
+    }
+    public Categoria(Long codigo,String nome) {
+        this.codigo = codigo;
+        this.nome = nome;
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "codigo")
     private Long codigo;
     @Column(name = "nome")
-    @NotBlank(message = "Nome")
-    @Length(min = 3,max=50, message = "Nome")
     private String nome;
 
     public Long getCodigo() {

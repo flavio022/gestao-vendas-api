@@ -1,5 +1,6 @@
 package com.gvendas.gestaovendas.controller;
 
+import com.gvendas.gestaovendas.dto.CategoriaRequestDTO;
 import com.gvendas.gestaovendas.dto.CategoriaResponseDTO;
 import com.gvendas.gestaovendas.entities.Categoria;
 import com.gvendas.gestaovendas.services.CategoriaService;
@@ -41,9 +42,9 @@ public class CategoriaController {
 
     @ApiOperation(value = "Salva",nickname = "salvarCategoria")
     @PostMapping
-    public ResponseEntity<Categoria> salvar(@Valid @RequestBody Categoria categoria){
-        Categoria categoriaSalva = categoriaService.salvar(categoria);
-        return ResponseEntity.status(HttpStatus.CREATED).body(categoriaSalva);
+    public ResponseEntity<CategoriaResponseDTO> salvar(@Valid @RequestBody CategoriaRequestDTO categoriaDto){
+        Categoria categoriaSalva = categoriaService.salvar(categoriaDto.converterParaEntindade());
+        return ResponseEntity.status(HttpStatus.CREATED).body(CategoriaResponseDTO.converteParaCategoriaDTo(categoriaSalva));
     }
 
     @ApiOperation(value = "Atualizar",nickname = "atualizarCategoria")
