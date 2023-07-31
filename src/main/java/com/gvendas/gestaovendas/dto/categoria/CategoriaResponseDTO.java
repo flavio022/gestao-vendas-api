@@ -1,14 +1,8 @@
-package com.gvendas.gestaovendas.dto;
+package com.gvendas.gestaovendas.dto.categoria;
 
 import com.gvendas.gestaovendas.entities.Categoria;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.validation.constraints.NotBlank;
-import org.hibernate.validator.constraints.Length;
 
 /**
  * The CategoriaResponseDTO.
