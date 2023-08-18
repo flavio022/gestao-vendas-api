@@ -52,7 +52,7 @@ public class Produto {
     @Column(name = "observacao")
     @Length(max=500, message = "Observacao")
     private String observacao;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "codigo_categoria", referencedColumnName = "codigo")
     private Categoria categoria;
 

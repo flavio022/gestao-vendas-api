@@ -17,7 +17,7 @@ import java.util.Optional;
 
 @Api(tags = "Produto")
 @RestController
-@RequestMapping("/categoria{codigoCategoria}/produto")
+@RequestMapping("/categoria/{codigoCategoria}/produto")
 public class ProdutoController {
     public ProdutoService produtoService;
     public ProdutoController(ProdutoService produtoService){
