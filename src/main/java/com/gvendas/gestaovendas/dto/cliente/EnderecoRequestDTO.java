@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 
 /**
@@ -26,12 +27,16 @@ public class EnderecoRequestDTO {
   @NotNull(message = "Complemento")
   private String complemento;
   @ApiModelProperty(value = "Bairro")
+  @NotBlank(message = "Bairro")
   private String bairro;
   @ApiModelProperty(value = "Cep")
+  @NotBlank(message = "Telefone")
   private String cep;
   @ApiModelProperty(value = "Cidade")
+  @NotBlank(message = "Cidade")
   private String cidade;
   @ApiModelProperty(value = "Estado")
+  @NotBlank(message = "Estado")
   private String estado;
 
   public String getLogradouro() {

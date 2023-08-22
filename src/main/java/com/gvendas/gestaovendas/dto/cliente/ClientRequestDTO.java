@@ -25,7 +25,6 @@ public class ClientRequestDTO {
   private String nome;
   @ApiModelProperty(value = "Telefone")
   @NotBlank(message = "Telefone")
-  @Pattern(regexp = "\\([\\d]{2}\\)[\\d]{5}[- .][\\d]{4}\n",message = "Telefone")
   private String telefone;
   @ApiModelProperty(value = "Ativo")
   @NotNull(message = "Ativo")
@@ -47,6 +46,22 @@ public class ClientRequestDTO {
           enderecoRequestDTO.getEstado());
 
     return new Cliente(nome,telefone,ativo,endereco);
+
+  }
+
+  public Cliente converterParaEntidade(long codigo){
+
+    Endereco endereco =  new Endereco(
+
+          enderecoRequestDTO.getLogradouro(),
+          enderecoRequestDTO.getNumero(),
+          enderecoRequestDTO.getComplemento(),
+          enderecoRequestDTO.getBairro(),
+          enderecoRequestDTO.getCep(),
+          enderecoRequestDTO.getCidade(),
+          enderecoRequestDTO.getEstado());
+
+    return new Cliente(codigo,nome,telefone,ativo,endereco);
 
   }
 

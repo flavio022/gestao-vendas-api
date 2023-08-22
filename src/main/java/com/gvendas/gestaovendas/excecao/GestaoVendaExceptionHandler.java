@@ -23,6 +23,7 @@ public class GestaoVendaExceptionHandler extends ResponseEntityExceptionHandler 
     public static final String NOT_BLANK = "NotBlank";
     public static final String NOT_NULL = "NotNull";
     public static final String LENGTH = "Length";
+    public static final String PATTERN = "Length";
 
 
     @Override
@@ -75,6 +76,9 @@ public class GestaoVendaExceptionHandler extends ResponseEntityExceptionHandler 
         if(fieldError.getCode().equals(LENGTH)){
             return fieldError.getDefaultMessage().concat(String.format("deve ter entre %s e %s caracteres.",
                     fieldError.getArguments()[2],fieldError.getArguments()[1]));
+        }
+        if(fieldError.getCode().equals(PATTERN)){
+            return fieldError.getDefaultMessage().concat(String.format("Formato inválido."));
         }
         return fieldError.toString();
     }
