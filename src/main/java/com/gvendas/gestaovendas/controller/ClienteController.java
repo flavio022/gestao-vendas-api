@@ -12,12 +12,14 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.gvendas.gestaovendas.dto.cliente.ClienteResponseDTO;
 /**
@@ -42,7 +44,12 @@ public class ClienteController {
     return clienteServico.listAll().stream().map(
           cliente -> ClienteResponseDTO.converteParaClienteDTO(cliente))
           .collect(Collectors.toList());
-
+  }
+  @ApiOperation(value = "Deletar",nickname = "deletarCliente")
+  @DeleteMapping(value = "/{codigo}")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void delete(@PathVariable Long codigo){
+    clienteServico.deletar(codigo);
   }
   @ApiOperation(value = "Listar por código",nickname="buscarClientesPorId")
   @GetMapping("/{id}")

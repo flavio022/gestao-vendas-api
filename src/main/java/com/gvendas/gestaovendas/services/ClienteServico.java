@@ -42,6 +42,9 @@ public class ClienteServico {
 
       return clienteRepository.save(clienteAtualizar);
     }
+    public void deletar(Long codigo){
+      clienteRepository.deleteById(codigo);
+    }
     private Cliente validarClienteExite(long codigo){
      Optional<Cliente> cliente = listById(codigo);
      if(cliente.isEmpty()){
